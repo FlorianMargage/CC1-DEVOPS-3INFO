@@ -17,10 +17,10 @@ Ce projet est destiné à valider les connaissances en DevOps des élèves de 3�
 
  RUN  v3.0.6 /home/runner/work/CC1-DEVOPS-3INFO/CC1-DEVOPS-3INFO
 
- ✓ src/App.test.jsx (1 test) 98ms
+ ✓ src/App.test.jsx (1 test) 99ms
 
  Test Files  1 passed (1)
       Tests  1 passed (1)
-   Start at  09:25:57
-   Duration  923ms (transform 44ms, setup 78ms, collect 117ms, tests 98ms, environment 381ms, prepare 67ms)
+   Start at  09:28:24
+   Duration  977ms (transform 80ms, setup 85ms, collect 112ms, tests 99ms, environment 428ms, prepare 75ms)
 
