@@ -22,7 +22,7 @@ jobs:
 
       - name: Tests
         run: |
-          npm test --coverage >> readme.md  # Exécute les tests et génère un fichier de résultats au format JSON
+          npm test --coverage >> README.md  # Exécute les tests et génère un fichier de résultats au format JSON
           git config --local user.name "github-actions"
           git config --local user.email "github-actions@github.com"
           git add README.md
