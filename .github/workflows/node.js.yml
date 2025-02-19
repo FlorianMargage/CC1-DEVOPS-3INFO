@@ -36,3 +36,28 @@ jobs:
           git add README.md
           git commit -m "Update test results in README"
           git push
+
+  auto-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v1
+        with:
+          publish-dir: "./dist" # Répertoire où Vite génère les fichiers de build
+          production-branch: "main" # ou ta branche de production
+          deploy-key: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          site-id: ${{ secrets.NETLIFY_SITE_ID }}
