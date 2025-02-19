@@ -22,16 +22,7 @@ jobs:
 
       - name: Tests
         run: |
-          npm test --coverage --json > result.json  # Exécute les tests et génère un fichier de résultats au format JSON
-
-      - name: Update README with test results
-        run: |
-          # Extraire les résultats des tests depuis le fichier JSON
-          TEST_RESULTS=$(cat result.json | jq '.coverageMap')
-
-          # Insérer ou mettre à jour les résultats dans la section "Test Results" du README
-          sed -i "/## Test Results/a\\
-          $TEST_RESULTS" README.md
+          npm test --coverage --json >> readme.md  # Exécute les tests et génère un fichier de résultats au format JSON
 
       # Étape 6 : Committer et pousser les modifications sur le README.md
       - name: Commit and push updated README
