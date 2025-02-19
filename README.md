@@ -10,3 +10,17 @@ Ce projet est destiné à valider les connaissances en DevOps des élèves de 3�
 4. Implémentez une github action pour déployer automatiquement le site sur un hebergement gratuit (Netlify)
 
 ## Test Results
+
+> cc1-devops-3info@0.0.0 test
+> vitest
+
+
+ RUN  v3.0.6 /home/runner/work/CC1-DEVOPS-3INFO/CC1-DEVOPS-3INFO
+
+ ✓ src/App.test.jsx (1 test) 100ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  08:27:52
+   Duration  946ms (transform 51ms, setup 79ms, collect 107ms, tests 100ms, environment 393ms, prepare 76ms)
+
