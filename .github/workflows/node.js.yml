@@ -27,7 +27,7 @@ jobs:
 
       - name: Tests
         run: |
-          npm test --coverage | sed 's/\x1b\[[0-9;]*m//g' >> README.md  # Exécute les tests et génère un fichier de résultats au format JSON
+          npm test --coverage | sed 's/\x1b\[[0-9;]*m//g' >> README.md
 
       - name: Commit and push updated README
         run: |
