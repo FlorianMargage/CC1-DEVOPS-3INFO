@@ -11,4 +11,4 @@ Ce projet est destiné à valider les connaissances en DevOps des élèves de 3�
 
 ## Test Results
 
-[![Lint JavaScript](https://github.com/FlorianMargage/CC1-DEVOPS-3INFO/actions/workflows/node.js.yml/badge.svg)](https://github.com/FlorianMargage/CC1-DEVOPS-3INFO/actions/workflows/node.js.yml)
+[![Lint JavaScript](https://github.com/FlorianMargage/CC1-DEVOPS-3INFO/actions/workflows/node.js.yml/badge.svg?event=push)](https://github.com/FlorianMargage/CC1-DEVOPS-3INFO/actions/workflows/node.js.yml)

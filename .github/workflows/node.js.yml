@@ -20,9 +20,22 @@ jobs:
       - name: ESLint (JS/TS) Action
         run: npx eslint "*.js"
 
+      - name: Clean README.md
+        run: |
+          git pull
+          sed -i '15,$d' README.md
+
       - name: Tests
         run: |
-          npm test --coverage
+          npm test --coverage | sed 's/\x1b\[[0-9;]*m//g' >> README.md
+
+      - name: Commit and push updated README
+        run: |
+          git config --local user.name "github-actions"
+          git config --local user.email "github-actions@github.com"
+          git add README.md
+          git commit -m "Update test results in README"
+          git push
 
   auto-deploy:
     runs-on: ubuntu-latest
