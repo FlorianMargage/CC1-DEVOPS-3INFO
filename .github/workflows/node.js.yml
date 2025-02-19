@@ -7,58 +7,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Étape 1 : Check-out du code source
       - uses: actions/checkout@v4
 
-      # Étape 2 : Installer Node.js
       - name: Install Node
         uses: actions/setup-node@v3
         with:
           node-version: 22
 
-      # Étape 3 : Installer les dépendances
       - name: Install dependencies
         run: npm install
 
-      # Étape 4 : Lancer ESLint
       - name: ESLint (JS/TS) Action
         run: npx eslint "*.js"
 
-      # Étape 5 : Exécuter les tests et capturer la sortie
-      - name: Run Tests and Capture Output
-        id: test
+      - name: Tests
         run: |
-          # Exécuter les tests et récupérer la sortie
-          TEST_OUTPUT=$(npx vitest run --coverage)
+          npm test --coverage --json > result.json  # Exécute les tests et génère un fichier de résultats au format JSON
 
-          # Extraire le pourcentage de couverture à partir du rapport de Vitest
-          COVERAGE=$(echo "$TEST_OUTPUT" | grep -oP 'All files\s+\|\s+\d+\.\d+' | awk '{print $3}')
-
-          # Vérifier si la couverture a été extraite avec succès
-          if [[ -n "$COVERAGE" ]]; then
-            echo "Coverage extracted: $COVERAGE%"
-          else
-            echo "No coverage found."
-          fi
-
-          # Sauvegarder la sortie pour l'étape suivante
-          echo "TEST_OUTPUT=$TEST_OUTPUT" >> $GITHUB_ENV
-
-      # Étape 6 : Mettre à jour le README.md avec la couverture des tests
       - name: Update README with test results
         run: |
-          # Extraire la couverture des tests de la sortie
-          COVERAGE=$(echo "$TEST_OUTPUT" | grep -oP 'All files\s+\|\s+\d+\.\d+' | awk '{print $3}')
+          # Extraire les résultats des tests depuis le fichier JSON
+          TEST_RESULTS=$(cat result.json | jq '.coverageMap')
 
-          # Si on trouve un pourcentage de couverture, mettre à jour le README
-          if [[ -n "$COVERAGE" ]]; then
-            # Mettre à jour la section Test Results avec la couverture
-            sed -i "s|## Test Results|## Test Results\n\nTest Coverage: $COVERAGE%" README.md
-          else
-            echo "Pas de couverture de test trouvée."
-          fi
+          # Insérer ou mettre à jour les résultats dans la section "Test Results" du README
+          sed -i "/## Test Results/a\\
+          $TEST_RESULTS" README.md
 
-      # Étape 7 : Committer et pousser les modifications dans le README.md
+      # Étape 6 : Committer et pousser les modifications sur le README.md
       - name: Commit and push updated README
         run: |
           git config --local user.name "github-actions"
