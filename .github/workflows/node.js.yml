@@ -22,7 +22,7 @@ jobs:
 
       - name: Tests
         run: |
-          npm test -- --coverage --format json > result.json  # Exécute les tests et génère un fichier de résultats au format JSON
+          npm test -- --coverage --reporter json > result.json  # Exécute les tests et génère un fichier de résultats au format JSON
 
       # Étape 5 : Mettre à jour le README avec les résultats des tests
       - name: Update README with test results
