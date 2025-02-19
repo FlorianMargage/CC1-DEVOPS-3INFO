@@ -23,7 +23,7 @@ jobs:
       - name: Clean README.md
         run: |
           git pull
-          sed -i '15,$d' README.md
+          sed -i '19,$d' README.md
 
       - name: Tests
         run: |
