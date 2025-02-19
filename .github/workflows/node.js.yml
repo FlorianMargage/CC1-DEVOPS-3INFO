@@ -36,8 +36,6 @@ jobs:
       # Étape 6 : Committer et pousser les modifications sur le README.md
       - name: Commit and push updated README
         run: |
-          git config --local user.name "github-actions"
-          git config --local user.email "github-actions@github.com"
           git add README.md
           git commit -m "Update test results in README"
           git push
