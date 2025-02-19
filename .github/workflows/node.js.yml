@@ -7,38 +7,46 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Étape 1 : Check-out du code source
       - uses: actions/checkout@v4
 
+      # Étape 2 : Installer Node.js
       - name: Install Node
         uses: actions/setup-node@v3
         with:
           node-version: 22
 
+      # Étape 3 : Installer les dépendances
       - name: Install dependencies
         run: npm install
 
+      # Étape 4 : Lancer ESLint
       - name: ESLint (JS/TS) Action
         run: npx eslint "*.js"
 
-      - name: Tests
+      # Étape 5 : Exécuter les tests et récupérer la sortie
+      - name: Run Tests and Capture Output
+        id: test
         run: |
-          TEST_OUTPUT=$(npm test --coverage)  # Exécute les tests et récupère la sortie
-          echo "TEST_OUTPUT=$TEST_OUTPUT" >> $GITHUB_ENV  # Enregistre la sortie dans une variable d'environnement
+          TEST_OUTPUT=$(npx vitest run --coverage)  # Exécuter les tests avec Vitest et obtenir la sortie
+          echo "$TEST_OUTPUT"
+          echo "TEST_OUTPUT=$TEST_OUTPUT" >> $GITHUB_ENV  # Enregistrer la sortie dans une variable d'environnement
 
-      # Étape 5 : Extraire les résultats des tests et mettre à jour README.md
+      # Étape 6 : Extraire la couverture des tests et mettre à jour README.md
       - name: Update README with test results
         run: |
-          # Extraire la couverture des tests de la sortie de Vitest
+          # Extraire le pourcentage de couverture à partir de la sortie de Vitest
           COVERAGE=$(echo "$TEST_OUTPUT" | grep -oP 'All files covered: \K[0-9.]+')
 
-          # Si on trouve un pourcentage de couverture, on met à jour le README
+          # Si un pourcentage de couverture est trouvé, mettre à jour le README
           if [[ -n "$COVERAGE" ]]; then
+            # Mettre à jour le README.md avec le pourcentage de couverture des tests
             sed -i "s|## Test Results|## Test Results\n\nTest Coverage: $COVERAGE%" README.md
           else
             echo "Pas de couverture de test trouvée."
           fi
 
-      # Étape 6 : Committer et pousser les modifications sur le README.md
+      # Étape 7 : Committer et pousser les modifications dans le README.md
       - name: Commit and push updated README
         run: |
           git config --local user.name "github-actions"
