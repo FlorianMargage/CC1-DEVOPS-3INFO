@@ -20,9 +20,13 @@ jobs:
       - name: ESLint (JS/TS) Action
         run: npx eslint "*.js"
 
+      - name: clean README.md
+        run: |
+          git pull
+          sed -i '13,$d' README.md
+
       - name: Tests
         run: |
-          sed -i '13,$d' README.md
           npm test --coverage | sed 's/\x1b\[[0-9;]*m//g' >> README.md  # Exécute les tests et génère un fichier de résultats au format JSON
 
       - name: Commit and push updated README
