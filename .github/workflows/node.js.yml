@@ -22,16 +22,21 @@ jobs:
 
       - name: Tests
         run: |
-          npm test --coverage --reporter json > result.json  # Exécute les tests et génère un fichier de résultats au format JSON
+          TEST_OUTPUT=$(npm test --coverage)  # Exécute les tests et récupère la sortie
+          echo "TEST_OUTPUT=$TEST_OUTPUT" >> $GITHUB_ENV  # Enregistre la sortie dans une variable d'environnement
 
-      # Étape 5 : Mettre à jour le README avec les résultats des tests
+      # Étape 5 : Extraire les résultats des tests et mettre à jour README.md
       - name: Update README with test results
         run: |
-          # Extraire les résultats du fichier result.json
-          TEST_RESULT=$(jq '.total.coverage' result.json)  # Ajuste en fonction de la structure du JSON généré par Vitest
+          # Extraire la couverture des tests de la sortie de Vitest
+          COVERAGE=$(echo "$TEST_OUTPUT" | grep -oP 'All files covered: \K[0-9.]+')
 
-          # Remplacer la section "Test Results" dans README.md
-          sed -i "s|## Test Results|## Test Results\n\nTest Coverage: $TEST_RESULT%" README.md
+          # Si on trouve un pourcentage de couverture, on met à jour le README
+          if [[ -n "$COVERAGE" ]]; then
+            sed -i "s|## Test Results|## Test Results\n\nTest Coverage: $COVERAGE%" README.md
+          else
+            echo "Pas de couverture de test trouvée."
+          fi
 
       # Étape 6 : Committer et pousser les modifications sur le README.md
       - name: Commit and push updated README
