@@ -23,10 +23,6 @@ jobs:
       - name: Tests
         run: |
           npm test --coverage --json >> readme.md  # Exécute les tests et génère un fichier de résultats au format JSON
-
-      # Étape 6 : Committer et pousser les modifications sur le README.md
-      - name: Commit and push updated README
-        run: |
           git config --local user.name "github-actions"
           git config --local user.email "github-actions@github.com"
           git add README.md
