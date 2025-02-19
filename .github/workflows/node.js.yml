@@ -20,7 +20,7 @@ jobs:
       - name: ESLint (JS/TS) Action
         run: npx eslint "*.js"
 
-      - name: clean README.md
+      - name: Clean README.md
         run: |
           git pull
           sed -i '13,$d' README.md
