@@ -27,7 +27,7 @@ jobs:
 
       - name: Tests
         run: |
-          echo [![Lint JavaScript](https://github.com/FlorianMargage/CC1-DEVOPS-3INFO/actions/workflows/node.js.yml/badge.svg)](https://github.com/FlorianMargage/CC1-DEVOPS-3INFO/actions/workflows/node.js.yml) >> README.md
+          npm test --coverage
 
       - name: Commit and push updated README
         run: |
